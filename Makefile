@@ -32,7 +32,7 @@ elapsed_time:
 
 .PHONY: build
 build:
-	docker-compose build --pull
+	docker-compose build --pull --parallel
 	@make elapsed_time
 	@echo "All built 🏛"
 

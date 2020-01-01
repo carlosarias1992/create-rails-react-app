@@ -1,35 +1,19 @@
-import React from 'react';
-import axios from 'axios';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Provider, connect } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import Root from "./features/Root";
+import "./App.css";
 
-const fetchContent = async (updateContent: (content: string) => void) => {
-  const response = await axios.get('http://localhost:3001/greetings/hello',{
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-  });
-  updateContent(response.data.content)
-};
+const App = ({ store }) => (
+  <Provider store={store}>
+    <BrowserRouter>
+      <Root />
+    </BrowserRouter>
+  </Provider>
+);
 
-const App: React.FC = () => {
-  const [content, updateContent] = React.useState('Waiting for a response from Rails...');
+const mapStateToProps = state => ({
+  currentUser: state.session.current_user_id
+});
 
-  React.useEffect(() => {
-    fetchContent(updateContent);
-  }, []);
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          {content}
-        </p>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+export default connect(mapStateToProps, null)(App);

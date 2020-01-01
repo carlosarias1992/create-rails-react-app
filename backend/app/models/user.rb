@@ -34,9 +34,7 @@ class User < ApplicationRecord
     self.session_token ||= User.generate_session_token
   end
 
-  private
-
-  def self.generate_session_token
+  private_class_method def self.generate_session_token
     SecureRandom.urlsafe_base64
   end
 end

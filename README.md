@@ -1,4 +1,4 @@
-# Entry
+# Entry  [![Build Status](https://travis-ci.com/carlosarias1992/entry.svg?token=PXQSTSbcuzTt1ugrMp75&branch=master)](https://travis-ci.com/carlosarias1992/entry)
 
 ### Description
 

@@ -24,6 +24,11 @@ help:
 	@echo "clean                    Remove dangling images and exited containers"
 	@echo "clean_volumes            Prune data volumes"
 	@echo ""
+	@echo "TESTING:"
+	@echo "backend_test             Runs all backend tests"
+	@echo "frontend_test            Runs all frontend tests"
+	@echo "test                     Runs all backend and frontend tests"
+	@echo ""
 
 .PHONY: elapsed_time
 elapsed_time:
@@ -110,3 +115,16 @@ restart_frontend: down clean
 	@docker-compose build frontend
 	@docker-compose up -d
 	@docker-compose logs --tail 10 -f
+
+.PHONY: backend_test
+backend_test:
+	@docker-compose run backend rails test
+
+.PHONY: frontend_test
+frontend_test:
+	@docker-compose exec frontend sh -c "yarn test-ci"
+
+.PHONY: test
+test:
+	@make backend_test
+	@make frontend_test

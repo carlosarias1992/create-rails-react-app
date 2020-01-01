@@ -17,4 +17,5 @@ script:
   - make build
   - docker-compose -f docker-compose.yml up -d
   - sleep 30
+  - make test
   - make down --no-print-directory

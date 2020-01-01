@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
+require 'bcrypt'
+
 class User < ApplicationRecord
+  include BCrypt
+
   validates :username, :session_token, :password_digest, presence: true
   validates :username, :session_token, uniqueness: true
   validates :password, length: { minimum: 6, allow_nil: true }
@@ -16,11 +20,11 @@ class User < ApplicationRecord
 
   def password=(password)
     @password = password
-    self.password_digest = BCrypt::Password.create(password)
+    self.password_digest = Password.create(password)
   end
 
   def password?(password)
-    bcrypt_password = BCrypt::Password.new(password_digest)
+    bcrypt_password = Password.new(password_digest)
     bcrypt_password.password?(password)
   end
 
@@ -34,7 +38,7 @@ class User < ApplicationRecord
     self.session_token ||= User.generate_session_token
   end
 
-  private_class_method def self.generate_session_token
+  def self.generate_session_token
     SecureRandom.urlsafe_base64
   end
 end

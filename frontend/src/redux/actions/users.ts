@@ -4,23 +4,17 @@ export const RECEIVE_SESSION_DATA = "RECEIVE_SESSION_DATA";
 export const RECEIVE_USER = "RECEIVE_USER";
 
 const receiveSessionData = ({
-  users,
-  posts,
-  comments,
-  friendRequests,
-  likes
+  // @ts-ignore
+  users
 }) => {
   return {
     type: RECEIVE_SESSION_DATA,
     users,
-    posts,
-    comments,
-    friendRequests,
-    likes,
     sessionDataReceived: true
   };
 };
 
+// @ts-ignore
 const receiveUser = user => {
   return {
     type: RECEIVE_USER,
@@ -28,17 +22,23 @@ const receiveUser = user => {
   };
 };
 
-export const fetchSessionData = () => dispatch => {
-  return UsersApi.fetchSessionData().then(payload =>
-    dispatch(receiveSessionData(payload))
-  );
+export const fetchSessionData = () => async (
+  dispatch: (arg0: { type: string; users: any }) => void
+) => {
+  const payload = await UsersApi.fetchSessionData();
+  // @ts-ignore
+  return dispatch(receiveSessionData(payload));
 };
 
-export const fetchUser = id => dispatch => {
+export const fetchUser = (id: any) => (
+  dispatch: (arg0: { type: string; user: any }) => void
+) => {
   return UsersApi.fetchUser(id).then(user => dispatch(receiveUser(user)));
 };
 
-export const updateUser = user => dispatch => {
+export const updateUser = (user: { id: any }) => (
+  dispatch: (arg0: { type: string; user: any }) => void
+) => {
   return UsersApi.updateUser(user).then(editedUser =>
     dispatch(receiveUser(editedUser))
   );

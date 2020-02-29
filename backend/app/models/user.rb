@@ -25,7 +25,7 @@ class User < ApplicationRecord
 
   def password?(password)
     bcrypt_password = Password.new(password_digest)
-    bcrypt_password.password?(password)
+    bcrypt_password.is_password?(password)
   end
 
   def reset_session_token

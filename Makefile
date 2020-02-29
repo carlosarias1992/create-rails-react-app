@@ -43,8 +43,14 @@ build:
 
 .PHONY: init
 init:
-	@docker-compose run frontend yarn
 	@docker-compose run backend rails db:create
+	@docker-compose run backend rails db:migrate
+	@docker-compose run backend rails db:setup
+
+.PHONY: install
+install:
+	@docker-compose run frontend yarn install
+	@docker-compose run backend bundle install
 
 .PHONY: up
 up:

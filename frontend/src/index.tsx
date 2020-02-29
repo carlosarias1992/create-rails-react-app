@@ -3,19 +3,22 @@ import ReactDOM from "react-dom";
 import configureStore from "./redux/store";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import axios from "axios";
 
 import "./index.css";
+
+// setup axios
+axios.defaults.baseURL = "http://localhost:3001";
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("root");
 
   let savedSession;
+  // @ts-ignore
   if (window.currentUser) {
     savedSession = {
-      entities: {
-        users: { [window.currentUser.id]: window.currentUser }
-      },
-      session: { current_user_id: window.currentUser.id }
+      // @ts-ignore
+      session: { currentUser: window.currentUser.id }
     };
   } else {
     savedSession = {};

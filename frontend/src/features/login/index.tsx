@@ -1,10 +1,18 @@
 import React from "react";
-import { login } from "../../api_requests/sessions";
+import { connect } from "react-redux";
+import { login } from "../../redux/actions/session";
 
 const INITIAL_STATE = {
   username: "",
-  password: "",
-  errors: ""
+  password: ""
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    login: (user: any) => {
+      return dispatch(login(user));
+    }
+  };
 };
 
 class Login extends React.Component {
@@ -12,11 +20,6 @@ class Login extends React.Component {
     super(props);
     this.state = INITIAL_STATE;
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidUpdate() {
-    // @ts-ignore
-    return this.props.loggedInStatus ? this.redirect() : null;
   }
 
   handleInput(type: string) {
@@ -35,71 +38,38 @@ class Login extends React.Component {
       password: password
     };
 
-    login({ user })
-      .then(response => {
-        if (response.data.id) {
-          // @ts-ignore
-          this.props.handleLogin(response.data);
-          this.redirect();
-        } else {
-          this.setState({
-            errors: response.data.errors
-          });
-        }
-      })
-      .catch(error => console.log("api errors:", error));
-  }
-
-  redirect = () => {
     // @ts-ignore
-    this.props.history.push("/");
-  };
-
-  handleErrors = () => {
-    return (
-      <div>
-        <ul>
-          // @ts-ignore
-          {this.state.errors.map(error => {
-            return <li key={error}>{error}</li>;
-          })}
-        </ul>
-      </div>
-    );
-  };
+    this.props.login({ user });
+  }
 
   render() {
     // @ts-ignore
     const { username, password } = this.state;
 
     return (
-      <>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Username
-            <input
-              type="text"
-              name="user[username]"
-              value={username}
-              onChange={this.handleInput("username")}
-            />
-          </label>
-          <label>
-            Password
-            <input
-              type="password"
-              name="user[password]"
-              value={password}
-              onChange={this.handleInput("password")}
-            />
-          </label>
-          <input type="submit" value="Log In" />
-        </form>
-        // @ts-ignore
-        <div>{this.state.errors ? this.handleErrors() : null}</div>
-      </>
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Username
+          <input
+            type="text"
+            name="user[username]"
+            value={username}
+            onChange={this.handleInput("username")}
+          />
+        </label>
+        <label>
+          Password
+          <input
+            type="password"
+            name="user[password]"
+            value={password}
+            onChange={this.handleInput("password")}
+          />
+        </label>
+        <input type="submit" value="Log In" />
+      </form>
     );
   }
 }
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);

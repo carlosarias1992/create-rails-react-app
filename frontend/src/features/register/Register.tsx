@@ -1,6 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
-import { signup } from "../../redux/actions/users";
 
 const INITIAL_STATE = {
   username: "",
@@ -8,31 +6,22 @@ const INITIAL_STATE = {
   errors: ""
 };
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    signup: (user: any) => {
-      return dispatch(signup(user));
-    }
-  };
-};
-
 class Register extends React.Component {
-  constructor(props: Readonly<{}>) {
+  constructor(props) {
     super(props);
     this.state = INITIAL_STATE;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInput(type: string) {
-    return (e: { target: { value: any } }) => {
+    return e => {
       this.setState({ [type]: e.target.value });
     };
   }
 
-  handleSubmit(e: { preventDefault: () => void }) {
+  handleSubmit(e) {
     e.preventDefault();
 
-    // @ts-ignore
     const { username, password } = this.state;
     let user = {
       username: username,
@@ -43,7 +32,6 @@ class Register extends React.Component {
   }
 
   render() {
-    // @ts-ignore
     const { username, password } = this.state;
 
     return (
@@ -73,4 +61,4 @@ class Register extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Register);
+export default Register;

@@ -2,16 +2,18 @@ import { connect } from "react-redux";
 import Root from "./Root";
 import { logout, loginAction } from "../redux/actions/session";
 
-const mapStateToProps = (state: any) => {
-  const { currentUser } = state.entities.session;
-  const { errors } = state.errors;
+const mapStateToProps = state => {
+  const {
+    entities: { currentUser },
+    errors: { errors }
+  } = state;
   return { currentUser, errors };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = dispatch => {
   return {
     logout: () => dispatch(logout()),
-    login: (user: any) => dispatch(loginAction(user))
+    login: user => dispatch(loginAction(user))
   };
 };
 

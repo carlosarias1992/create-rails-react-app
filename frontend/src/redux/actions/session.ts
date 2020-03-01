@@ -1,48 +1,41 @@
-import * as SessionApi from "../../api_requests/sessions";
+import * as SessionApi from "../../apiRequests/sessions";
 import { receiveErrorsAction } from "./index";
 
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 
-export const loginAction = (
-  // @ts-ignore
-  user
-) => {
+export const loginAction = (user: any) => {
   return {
     type: LOGIN,
     user
   };
 };
 
-// @ts-ignore
 const logoutAction = () => {
   return {
     type: LOGOUT
   };
 };
 
-export const login = (user: any) => async (
-  dispatch: (arg0: { type: string; users: any }) => void
-) => {
-  return (
-    SessionApi.login(user)
-      .then(response => {
-        // @ts-ignore
-        dispatch(loginAction(response.data));
-      })
-      // @ts-ignore
-      .catch((response: any) => dispatch(receiveErrorsAction(response)))
-  );
+export const login = user => dispatch => {
+  return SessionApi.login(user)
+    .then(response => {
+      dispatch(loginAction(response.data));
+    })
+    .catch((response: any) => dispatch(receiveErrorsAction(response)));
 };
 
-export const logout = () => (
-  dispatch: (arg0: { type: string; user: any }) => void
-) => {
+export const logout = () => dispatch => {
+  return SessionApi.logout()
+    .then(() => dispatch(logoutAction()))
+    .catch((response: any) => dispatch(receiveErrorsAction(response)));
+};
+
+export const signup = user => dispatch => {
   return (
-    SessionApi.logout()
+    SessionApi.signup(user)
+      .then(response => dispatch(loginAction(response.data)))
       // @ts-ignore
-      .then(() => dispatch(logoutAction()))
-      // @ts-ignore
-      .catch((response: any) => dispatch(receiveErrorsAction(response)))
+      .catch(response => dispatch(receiveErrorsAction(response)))
   );
 };

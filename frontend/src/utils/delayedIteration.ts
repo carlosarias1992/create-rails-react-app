@@ -1,7 +1,7 @@
 export function delayedIteration(
   iterableArray: any[],
   callback: CallableFunction,
-  duration = 400,
+  duration = 350,
   index = 0
 ) {
   if (index >= iterableArray.length) return;

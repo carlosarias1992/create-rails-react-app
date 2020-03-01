@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Login from "../login";
-import Register from "../register";
+import Login from "../login/LoginContainer";
+import Register from "../register/RegisterContainer";
 
-const Home = (props: any) => {
+function Home(props) {
   const [toLoginPage, setToLoginPage] = useState(false);
 
   return (
@@ -14,6 +14,6 @@ const Home = (props: any) => {
       )}
     </>
   );
-};
+}
 
 export default Home;

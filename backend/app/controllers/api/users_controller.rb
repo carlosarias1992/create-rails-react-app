@@ -23,7 +23,7 @@ module Api
       if @user
         render :show
       else
-        render json: { errors: ["User does not exist"] }
+        render json: { errors: ['User does not exist'] }
       end
     end
 

@@ -24,6 +24,7 @@ PreCommit:
 
   RuboCop:
     enabled: true
+    exclude: '**/schema.rb'
 
   EsLint:
     enabled: true

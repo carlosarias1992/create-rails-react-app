@@ -9,35 +9,34 @@ class App extends React.Component {
   constructor(props: any) {
     super(props);
     this.state = {
-      isLoggedIn: false,
-      user: {}
+      isLoggedIn: false
     };
+    // @ts-ignore
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount() {
     // @ts-ignore
     loginStatus(this.state.user)
-      .then(response => {
+      .then((response: any) => {
         if (response.data.ok) {
           this.handleLogin(response);
         } else {
           this.handleLogout();
         }
       })
-      .catch(error => console.log("api errors: ", error));
+      .catch((error: any) => console.log("api errors: ", error));
   }
 
   handleLogin = (data: any) => {
     this.setState({
-      isLoggedIn: true,
-      user: { username: data.username, id: data.id }
+      isLoggedIn: true
     });
   };
 
   handleLogout = () => {
     this.setState({
-      isLoggedIn: false,
-      user: {}
+      isLoggedIn: false
     });
   };
 

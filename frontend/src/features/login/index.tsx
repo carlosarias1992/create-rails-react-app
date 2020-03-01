@@ -11,9 +11,10 @@ class Login extends React.Component {
   constructor(props: any) {
     super(props);
     this.state = INITIAL_STATE;
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount() {
+  componentDidUpdate() {
     // @ts-ignore
     return this.props.loggedInStatus ? this.redirect() : null;
   }
@@ -34,9 +35,9 @@ class Login extends React.Component {
       password: password
     };
 
-    login(user)
+    login({ user })
       .then(response => {
-        if (response.data.logged_in) {
+        if (response.data.id) {
           // @ts-ignore
           this.props.handleLogin(response.data);
           this.redirect();

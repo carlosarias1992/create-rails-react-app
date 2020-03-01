@@ -30,9 +30,9 @@ class Signup extends React.Component {
       password: password
     };
 
-    signup(user)
+    signup({ user })
       .then(response => {
-        if (response.data.status === "created") {
+        if (!response.data.errors) {
           // @ts-ignore
           this.props.handleLogin(response.data);
           this.redirect();

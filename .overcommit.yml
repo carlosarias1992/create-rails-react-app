@@ -16,6 +16,12 @@
 # Uncomment the following lines to make the configuration take effect.
 
 PreCommit:
+  Rufo:
+    enabled: true
+    on_warn: fail
+    description: 'opinionated ruby formatter'
+    command: ['rufo', './backend']
+
   RuboCop:
     enabled: true
 

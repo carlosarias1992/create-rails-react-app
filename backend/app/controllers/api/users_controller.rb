@@ -30,9 +30,11 @@ module Api
     def create
       @user = User.new(user_params)
 
-      if @user.save
+      if !logged_in? && @user.save
         login!
         render :show
+      elsif logged_in?
+        render json: { errors: ['Already logged in'] }, status: 422
       else
         render json: { errors: @user.errors.full_messages }, status: 422
       end

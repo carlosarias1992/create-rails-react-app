@@ -17,7 +17,7 @@ module Api
 
     def login_status
       if logged_in?
-        render json: { ok: true }
+        render json: { username: @current_user.username, id: @current_user.id, ok: true }
       else
         render json: { ok: false }
       end

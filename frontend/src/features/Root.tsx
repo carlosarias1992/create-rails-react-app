@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { CircularProgress } from "@material-ui/core";
 import Home from "./home";
 import Logout from "./logout";
 import logo from "../logo.svg";
 import { ToastProvider, useToasts } from "react-toast-notifications";
+import { loggedIn } from "../api_requests/sessions";
+import { delayedIteration } from "../utils";
 
 function renderContent(props: any) {
   // @ts-ignore
@@ -11,25 +14,9 @@ function renderContent(props: any) {
   return <Home />;
 }
 
-function delayedIteration(
-  iterableArray: any[],
-  callback: CallableFunction,
-  duration = 400,
-  index = 0
-) {
-  if (index >= iterableArray.length) return;
-
-  callback(iterableArray[index]);
-
-  index += 1;
-  setTimeout(
-    delayedIteration.bind({}, iterableArray, callback, duration, index),
-    duration
-  );
-}
-
 function Root(props: any) {
   const { addToast } = useToasts();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const { errors } = props;
@@ -40,11 +27,22 @@ function Root(props: any) {
     }
   }, [props.errors]);
 
+  useEffect(() => {
+    if (!props.currentUser) {
+      loggedIn().then((response: any) => {
+        setLoading(false);
+        if (response.data.ok) {
+          props.login(response.data);
+        }
+      });
+    }
+  }, [props.currentUser]);
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>{renderContent(props)}</p>
+        {loading ? <CircularProgress /> : <p>{renderContent(props)}</p>}
       </header>
     </div>
   );

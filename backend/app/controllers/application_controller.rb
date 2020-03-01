@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require 'jwt'
-
 class ApplicationController < ActionController::Base
-  helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!
+  helper_method :login!, :logged_in?, :current_user, :logout!
 
   def login!
     session[:user_id] = @user.id
@@ -11,10 +9,6 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
-  end
-
-  def authorized_user?
-    @user == current_user
   end
 
   def logged_in?

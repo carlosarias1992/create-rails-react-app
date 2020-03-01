@@ -1,10 +1,19 @@
-import { combineReducers } from "redux";
-import sessionReducer from "./session";
-import usersReducer from "./users";
+import { merge } from "lodash";
+import { RECEIVE_ERRORS } from "../../actions";
 
-const errorsReducer = combineReducers({
-  session: sessionReducer,
-  users: usersReducer
-});
+export default (
+  state = [],
+  action: { type: any; user: { id: any }; users: any }
+) => {
+  const oldState = Object.freeze(state);
+  let newState;
 
-export default errorsReducer;
+  switch (action.type) {
+    case RECEIVE_ERRORS:
+      const newState = merge({}, oldState);
+      newState.errors = action.errors;
+      return newState;
+    default:
+      return state;
+  }
+};

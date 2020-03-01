@@ -1,8 +1,8 @@
 import * as SessionApi from "../../api_requests/sessions";
+import { receiveErrorsAction } from "./index";
 
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
-export const RECEIVE_SESSION_ERRORS = "RECEIVE_SESSION_ERRORS";
 
 export const loginAction = (
   // @ts-ignore
@@ -21,16 +21,6 @@ const logoutAction = () => {
   };
 };
 
-// @ts-ignore
-const receiveSessionErrorsAction = ({ response }) => {
-  return {
-    type: RECEIVE_SESSION_ERRORS,
-    errors: response.data?.errors || [
-      "Something went wrong. Try again shortly."
-    ]
-  };
-};
-
 export const login = (user: any) => async (
   dispatch: (arg0: { type: string; users: any }) => void
 ) => {
@@ -41,7 +31,7 @@ export const login = (user: any) => async (
         dispatch(loginAction(response.data));
       })
       // @ts-ignore
-      .catch((response: any) => dispatch(receiveSessionErrorsAction(response)))
+      .catch((response: any) => dispatch(receiveErrorsAction(response)))
   );
 };
 
@@ -53,6 +43,6 @@ export const logout = () => (
       // @ts-ignore
       .then(() => dispatch(logoutAction()))
       // @ts-ignore
-      .catch((response: any) => dispatch(receiveSessionErrorsAction(response)))
+      .catch((response: any) => dispatch(receiveErrorsAction(response)))
   );
 };

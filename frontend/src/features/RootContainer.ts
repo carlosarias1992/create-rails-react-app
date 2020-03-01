@@ -4,9 +4,8 @@ import { logout, loginAction } from "../redux/actions/session";
 
 const mapStateToProps = (state: any) => {
   const { currentUser } = state.entities.session;
-  const sessionErrors = state.errors.session.errors || [];
-  const userErrors = state.errors.users.errors || [];
-  return { currentUser, errors: [...sessionErrors, ...userErrors] };
+  const { errors } = state.errors;
+  return { currentUser, errors };
 };
 
 const mapDispatchToProps = (dispatch: any) => {

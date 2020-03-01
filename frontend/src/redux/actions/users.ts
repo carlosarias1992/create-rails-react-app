@@ -1,5 +1,6 @@
 import * as UsersApi from "../../api_requests/users";
 import { loginAction } from "./session";
+import { receiveErrorsAction } from "./index";
 
 export const RECEIVE_USER = "RECEIVE_USER";
 export const RECEIVE_USER_ERRORS = "RECEIVE_USER_ERRORS";
@@ -12,16 +13,6 @@ export const receiveUser = user => {
   };
 };
 
-// @ts-ignore
-const receiveUserErrorsAction = ({ response }) => {
-  return {
-    type: RECEIVE_USER_ERRORS,
-    errors: response.data?.errors || [
-      "Something went wrong. Try again shortly."
-    ]
-  };
-};
-
 export const signup = (user: any) => (
   dispatch: (arg0: { type: string; user: any }) => void
 ) => {
@@ -29,7 +20,7 @@ export const signup = (user: any) => (
     UsersApi.signup(user)
       .then(response => dispatch(loginAction(response.data)))
       // @ts-ignore
-      .catch(response => dispatch(receiveUserErrorsAction(response)))
+      .catch(response => dispatch(receiveErrorsAction(response)))
   );
 };
 
@@ -40,7 +31,7 @@ export const fetchUser = (id: any) => (
     UsersApi.fetchUser(id)
       .then(response => dispatch(receiveUser(response.data)))
       // @ts-ignore
-      .catch(response => dispatch(receiveUserErrorsAction(response)))
+      .catch(response => dispatch(receiveErrorsAction(response)))
   );
 };
 
@@ -51,6 +42,6 @@ export const updateUser = (user: { id: any }) => (
     UsersApi.updateUser(user)
       .then(editedUser => dispatch(receiveUser(editedUser)))
       // @ts-ignore
-      .catch(response => dispatch(receiveUserErrorsAction(response)))
+      .catch(response => dispatch(receiveErrorsAction(response)))
   );
 };

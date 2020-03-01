@@ -42,7 +42,11 @@ function Root(props: any) {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        {loading ? <CircularProgress /> : <p>{renderContent(props)}</p>}
+        {loading ? (
+          <CircularProgress color="inherit" />
+        ) : (
+          <p>{renderContent(props)}</p>
+        )}
       </header>
     </div>
   );

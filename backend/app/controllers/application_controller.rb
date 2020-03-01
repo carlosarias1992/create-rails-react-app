@@ -3,43 +3,27 @@
 require "jwt"
 
 class ApplicationController < ActionController::Base
-  helper_method :current_user, :logged_in?
+  skip_before_action :verify_authenticity_token
 
-  def auth_header
-    request.headers["Authorization"]
-  end
+  helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!
 
-  def decoded_token
-    return nil unless auth_header
-
-    token = auth_header.split(" ")[1]
-    begin
-      JWT.decode(token, ENV["SECRET_KEY"], true, algorithm: "HS256")
-    rescue JWT::DecodeError
-      nil
-    end
+  def login!
+    session[:user_id] = @user.id
   end
 
   def current_user
-    decoded_hash = decoded_token
-    if decoded_hash.nil?
-      nil
-    else
-      user_id = decoded_hash[0]["user_id"]
-      @user = User.find_by(id: user_id)
-    end
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
-  def encode_token(payload)
-    JWT.encode(payload, ENV["SECRET_KEY"])
-  end
-
-  def get_token(user)
-    payload = { user_id: user.id }
-    encode_token(payload)
+  def authorized_user?
+    @user == current_user
   end
 
   def logged_in?
     !current_user.nil?
+  end
+
+  def logout!
+    session.clear
   end
 end

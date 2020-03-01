@@ -3,14 +3,19 @@ import { login } from "../../api_requests/sessions";
 
 const INITIAL_STATE = {
   username: "",
-  password: ""
+  password: "",
+  errors: ""
 };
 
 class Login extends React.Component {
-  constructor(props: Readonly<{}>) {
+  constructor(props: any) {
     super(props);
     this.state = INITIAL_STATE;
-    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    // @ts-ignore
+    return this.props.loggedInStatus ? this.redirect() : null;
   }
 
   handleInput(type: string) {
@@ -21,41 +26,77 @@ class Login extends React.Component {
 
   handleSubmit(e: { preventDefault: () => void }) {
     e.preventDefault();
-    login({ user: this.state }).then(
-      response => {
-        this.setState(INITIAL_STATE);
-        localStorage.setItem("token", JSON.stringify(response.data.jwt));
-      },
-      () => this.setState({ password: "" })
-    );
+
+    // @ts-ignore
+    const { username, password } = this.state;
+    let user = {
+      username: username,
+      password: password
+    };
+
+    login(user)
+      .then(response => {
+        if (response.data.logged_in) {
+          // @ts-ignore
+          this.props.handleLogin(response.data);
+          this.redirect();
+        } else {
+          this.setState({
+            errors: response.data.errors
+          });
+        }
+      })
+      .catch(error => console.log("api errors:", error));
   }
+
+  redirect = () => {
+    // @ts-ignore
+    this.props.history.push("/");
+  };
+
+  handleErrors = () => {
+    return (
+      <div>
+        <ul>
+          // @ts-ignore
+          {this.state.errors.map(error => {
+            return <li key={error}>{error}</li>;
+          })}
+        </ul>
+      </div>
+    );
+  };
 
   render() {
     // @ts-ignore
     const { username, password } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Username
-          <input
-            type="text"
-            name="user[username]"
-            value={username}
-            onChange={this.handleInput("username")}
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            name="user[password]"
-            value={password}
-            onChange={this.handleInput("password")}
-          />
-        </label>
-        <input type="submit" value="Log In" />
-      </form>
+      <>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Username
+            <input
+              type="text"
+              name="user[username]"
+              value={username}
+              onChange={this.handleInput("username")}
+            />
+          </label>
+          <label>
+            Password
+            <input
+              type="password"
+              name="user[password]"
+              value={password}
+              onChange={this.handleInput("password")}
+            />
+          </label>
+          <input type="submit" value="Log In" />
+        </form>
+        // @ts-ignore
+        <div>{this.state.errors ? this.handleErrors() : null}</div>
+      </>
     );
   }
 }

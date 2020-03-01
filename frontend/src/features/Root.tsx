@@ -1,16 +1,90 @@
 import React from "react";
-import { AuthRoute, ProtectedRoute } from "../routing";
+import { Switch, Route } from "react-router-dom";
 import Home from "./home";
 import Login from "./login";
 import Register from "./register";
+import { loginStatus } from "../api_requests/sessions";
 
 class App extends React.Component {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      isLoggedIn: false,
+      user: {}
+    };
+  }
+
+  componentDidMount() {
+    // @ts-ignore
+    loginStatus(this.state.user)
+      .then(response => {
+        if (response.data.ok) {
+          this.handleLogin(response);
+        } else {
+          this.handleLogout();
+        }
+      })
+      .catch(error => console.log("api errors: ", error));
+  }
+
+  handleLogin = (data: any) => {
+    this.setState({
+      isLoggedIn: true,
+      user: { username: data.username, id: data.id }
+    });
+  };
+
+  handleLogout = () => {
+    this.setState({
+      isLoggedIn: false,
+      user: {}
+    });
+  };
+
   render() {
     return (
       <div>
-        <ProtectedRoute path="/home" component={Home} />
-        <AuthRoute path="/login" component={Login} />
-        <AuthRoute path="/signup" component={Register} />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <Home
+                {...props}
+                // @ts-ignore
+                handleLogout={this.handleLogout}
+                // @ts-ignore
+                loggedInStatus={this.state.isLoggedIn}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/login"
+            render={props => (
+              <Login
+                {...props}
+                // @ts-ignore
+                handleLogin={this.handleLogin}
+                // @ts-ignore
+                loggedInStatus={this.state.isLoggedIn}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/signup"
+            render={props => (
+              <Register
+                {...props}
+                // @ts-ignore
+                handleLogin={this.handleLogin}
+                // @ts-ignore
+                loggedInStatus={this.state.isLoggedIn}
+              />
+            )}
+          />
+        </Switch>
       </div>
     );
   }

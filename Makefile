@@ -43,7 +43,7 @@ build:
 
 .PHONY: init
 init:
-	@docker-compose exec backend sh -c "rails db:create && rails db:migrate && rails db:setup"
+	@docker-compose exec backend sh -c "rails db:create && rails db:migrate && rails db:seed"
 
 .PHONY: install
 install:

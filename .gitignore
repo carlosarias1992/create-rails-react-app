@@ -28,3 +28,5 @@
 
 # Ignore local config files
 .idea
+
+backend/config/application.yml

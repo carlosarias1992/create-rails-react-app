@@ -1,4 +1,5 @@
 import React from "react";
+import { TextField, Button, FormGroup } from "@material-ui/core";
 
 const INITIAL_STATE = {
   username: "",
@@ -34,30 +35,35 @@ class Login extends React.Component {
     const { username, password } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h3>Login</h3>
-        <label>
-          Username
-          <input
-            type="text"
-            name="user[username]"
-            value={username}
-            onChange={this.handleInput("username")}
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            name="user[password]"
-            value={password}
-            onChange={this.handleInput("password")}
-          />
-        </label>
-        <input type="submit" value="Log In" />
-        Want to sign up instead? Click{" "}
-        <button onClick={() => this.props.setToLoginPage(false)}>here</button>
-      </form>
+      <>
+        <form onSubmit={this.handleSubmit}>
+          <h3>Login</h3>
+          <FormGroup>
+            <TextField
+              label="Username"
+              value={username}
+              variant="outlined"
+              size="small"
+              onChange={this.handleInput("username")}
+            />
+          </FormGroup>
+          <FormGroup>
+            <TextField
+              label="Password"
+              type="password"
+              value={password}
+              variant="outlined"
+              size="small"
+              onChange={this.handleInput("password")}
+            />
+          </FormGroup>
+          <Button type="submit">Login</Button>
+        </form>
+        <div>Want to sign up instead?</div>
+        <Button onClick={() => this.props.setToLoginPage(false)}>
+          Take me to sign up
+        </Button>
+      </>
     );
   }
 }

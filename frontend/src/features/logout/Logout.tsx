@@ -1,11 +1,12 @@
 import React from "react";
+import { Button } from "@material-ui/core";
 
 const Logout = props => {
   return (
-    <div>
-      Welcome back, {props.currentUser?.username}!
-      <button onClick={props.logout}>Logout</button>
-    </div>
+    <>
+      <p>Welcome back, {props.currentUser?.username}!</p>
+      <Button onClick={props.logout}>Logout</Button>
+    </>
   );
 };
 

@@ -9,9 +9,9 @@ module Api
         token = get_token(@user)
         render json: { username: @user.username, id: @user.id, jwt: token }
       elsif logged_in?
-        render json: { errors: ['Already logged in'] }, status: 422
+        render json: { errors: ["Already logged in"] }, status: 422
       else
-        render json: { errors: ['Invalid username/password'] }, status: 422
+        render json: { errors: ["Invalid username/password"] }, status: 422
       end
     end
 
@@ -19,7 +19,7 @@ module Api
       if current_user
         render json: { username: @user.username, id: @user.id }
       else
-        render json: { errors: ['Not logged in'] }, status: 404
+        render json: { errors: ["Not logged in"] }, status: 404
       end
     end
 

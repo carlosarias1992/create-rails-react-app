@@ -1,27 +1,16 @@
-import React from "react";
-import { logout } from "../../api_requests/sessions";
-
-const logoutCurrentUser = (props: any) => {
-  logout()
-    .then(response => {
-      props.handleLogout();
-      props.history.push("/");
-    })
-    .catch(error => console.log(error));
-};
-
-const redirect = (props: any) => {
-  props.history.push("/login");
-};
+import React, { useState } from "react";
+import Login from "../login";
+import Register from "../register";
 
 const Home = (props: any) => {
+  const [toLoginPage, setToLoginPage] = useState(false);
+
   return (
     <>
-      <h1>Welcome to my website</h1>
-      {props.loggedInStatus ? (
-        <button onClick={() => logoutCurrentUser(props)}>Logout</button>
+      {toLoginPage ? (
+        <Login {...props} setToLoginPage={setToLoginPage} />
       ) : (
-        redirect(props)
+        <Register {...props} setToLoginPage={setToLoginPage} />
       )}
     </>
   );

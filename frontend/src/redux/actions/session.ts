@@ -37,7 +37,6 @@ export const login = (user: any) => async (
   return (
     SessionApi.login(user)
       .then(response => {
-        console.log(response);
         // @ts-ignore
         dispatch(loginAction(response.data));
       })

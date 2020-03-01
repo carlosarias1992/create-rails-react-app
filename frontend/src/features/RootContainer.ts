@@ -1,19 +1,17 @@
 import { connect } from "react-redux";
 import Root from "./Root";
-import { logout, removeSessionErrors } from "../redux/actions/session";
+import { logout } from "../redux/actions/session";
 
 const mapStateToProps = (state: any) => {
   const { currentUser } = state.entities.session;
-  const { errors } = state.errors.session;
-  return { currentUser, errors };
+  const sessionErrors = state.errors.session.errors || [];
+  const userErrors = state.errors.users.errors || [];
+  return { currentUser, errors: [...sessionErrors, ...userErrors] };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    logout: () => dispatch(logout()),
-    removeErrors: () => {
-      dispatch(removeSessionErrors());
-    }
+    logout: () => dispatch(logout())
   };
 };
 

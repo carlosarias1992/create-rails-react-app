@@ -1,5 +1,6 @@
 import React from "react";
-import { signup } from "../../api_requests/sessions";
+import { connect } from "react-redux";
+import { signup } from "../../redux/actions/users";
 
 const INITIAL_STATE = {
   username: "",
@@ -7,7 +8,15 @@ const INITIAL_STATE = {
   errors: ""
 };
 
-class Signup extends React.Component {
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    signup: (user: any) => {
+      return dispatch(signup(user));
+    }
+  };
+};
+
+class Register extends React.Component {
   constructor(props: Readonly<{}>) {
     super(props);
     this.state = INITIAL_STATE;
@@ -30,70 +39,38 @@ class Signup extends React.Component {
       password: password
     };
 
-    signup({ user })
-      .then(response => {
-        if (!response.data.errors) {
-          // @ts-ignore
-          this.props.handleLogin(response.data);
-          this.redirect();
-        } else {
-          this.setState({
-            errors: response.data.errors
-          });
-        }
-      })
-      .catch(error => console.log("api errors:", error));
+    this.props.signup({ user });
   }
-
-  redirect = () => {
-    // @ts-ignore
-    this.props.history.push("/");
-  };
-
-  handleErrors = () => {
-    return (
-      <div>
-        <ul>
-          // @ts-ignore
-          {this.state.errors.map(error => {
-            return <li key={error}>{error}</li>;
-          })}
-        </ul>
-      </div>
-    );
-  };
 
   render() {
     // @ts-ignore
     const { username, password } = this.state;
 
     return (
-      <>
-        <form className="signup-form" onSubmit={this.handleSubmit}>
-          <label>
-            Username
-            <input
-              type="text"
-              value={username}
-              onChange={this.handleInput("username")}
-            />
-          </label>
-          <label>
-            Password
-            <input
-              type="password"
-              value={password}
-              onChange={this.handleInput("password")}
-            />
-          </label>
-
-          <input type="submit" value="Sign Up" />
-        </form>
-        // @ts-ignore
-        <div>{this.state.errors ? this.handleErrors() : null}</div>
-      </>
+      <form className="signup-form" onSubmit={this.handleSubmit}>
+        <h3>Sign up</h3>
+        <label>
+          Username
+          <input
+            type="text"
+            value={username}
+            onChange={this.handleInput("username")}
+          />
+        </label>
+        <label>
+          Password
+          <input
+            type="password"
+            value={password}
+            onChange={this.handleInput("password")}
+          />
+        </label>
+        <input type="submit" value="Sign Up" />
+        Want to login instead? Click{" "}
+        <button onClick={() => this.props.setToLoginPage(true)}>here</button>
+      </form>
     );
   }
 }
 
-export default Signup;
+export default connect(null, mapDispatchToProps)(Register);

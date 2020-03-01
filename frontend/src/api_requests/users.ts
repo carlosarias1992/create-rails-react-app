@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const fetchSessionData = () => {
-  return axios.get("api/users");
+export const createUser = (user: any) => {
+  return axios.post("api/users", user);
 };
 
 export const fetchUser = (id: any) => {

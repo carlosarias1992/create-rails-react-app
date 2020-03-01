@@ -1,5 +1,5 @@
 import { merge } from "lodash";
-import { RECEIVE_USER } from "../../actions/users";
+import { RECEIVE_USER_ERRORS } from "../../actions/users";
 
 export default (
   state = {},
@@ -9,8 +9,8 @@ export default (
   let newState;
 
   switch (action.type) {
-    case RECEIVE_USER:
-      newState = { [action.user.id]: action.user };
+    case RECEIVE_USER_ERRORS:
+      newState = { errors: action.errors };
       return merge({}, oldState, newState);
     default:
       return state;

@@ -48,6 +48,7 @@ class Login extends React.Component {
 
     return (
       <form onSubmit={this.handleSubmit}>
+        <h3>Login</h3>
         <label>
           Username
           <input
@@ -67,6 +68,8 @@ class Login extends React.Component {
           />
         </label>
         <input type="submit" value="Log In" />
+        Want to sign up instead? Click{" "}
+        <button onClick={() => this.props.setToLoginPage(false)}>here</button>
       </form>
     );
   }

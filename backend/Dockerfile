@@ -4,6 +4,7 @@ RUN mkdir -p /entry/backend
 WORKDIR /entry/backend
 COPY Gemfile /entry/backend/Gemfile
 COPY Gemfile.lock /entry/backend/Gemfile.lock
+RUN gem install bundler
 RUN bundle install
 COPY . /entry/backend
 

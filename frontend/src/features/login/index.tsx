@@ -1,10 +1,15 @@
 import React from "react";
 import { login } from "../../api_requests/sessions";
 
+const INITIAL_STATE = {
+  username: "",
+  password: ""
+};
+
 class Login extends React.Component {
   constructor(props: Readonly<{}>) {
     super(props);
-    this.state = { username: "", password: "" };
+    this.state = INITIAL_STATE;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -17,8 +22,10 @@ class Login extends React.Component {
   handleSubmit(e: { preventDefault: () => void }) {
     e.preventDefault();
     login({ user: this.state }).then(
-      response =>
-        localStorage.setItem("currentUser", JSON.stringify(response.data)),
+      response => {
+        this.setState(INITIAL_STATE);
+        localStorage.setItem("token", JSON.stringify(response.data.jwt));
+      },
       () => this.setState({ password: "" })
     );
   }

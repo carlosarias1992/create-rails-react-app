@@ -10,6 +10,11 @@ Bundler.require(*Rails.groups)
 
 module Entry
   class Application < Rails::Application
+    if File.file?('/.dockerenv') == true
+      host_ip = `/sbin/ip route|awk '/default/ { print $3 }'`.strip
+      config.web_console.whitelisted_ips = host_ip
+    end
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 

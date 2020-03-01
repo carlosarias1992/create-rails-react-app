@@ -7,7 +7,3 @@ export const signup = (user: any) => {
 export const login = (user: any) => {
   return axios.post("api/session", user);
 };
-
-export const logout = () => {
-  return axios.delete("api/session");
-};

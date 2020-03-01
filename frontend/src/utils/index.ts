@@ -1,1 +1,1 @@
-export { getCurrentUser } from "./getCurrentUser";
+export { loggedIn } from "./user";

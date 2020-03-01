@@ -31,8 +31,8 @@ module Api
       @user = User.new(user_params)
 
       if @user.save
-        login(@user)
-        render :show
+        token = get_token(@user)
+        render json: { username: @user.username, id: @user.id, jwt: token }
       else
         render json: { errors: @user.errors.full_messages }, status: 422
       end

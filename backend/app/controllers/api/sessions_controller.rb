@@ -6,8 +6,8 @@ module Api
       @user = User.find_by_credentials(session_params[:username], session_params[:password])
 
       if @user && !logged_in?
-        login(@user)
-        render :show
+        token = get_token(@user)
+        render json: { username: @user.username, id: @user.id, jwt: token }
       elsif logged_in?
         render json: { errors: ['Already logged in'] }, status: 422
       else
@@ -15,10 +15,9 @@ module Api
       end
     end
 
-    def destroy
-      if session[:session_token]
-        logout
-        render json: {}
+    def auto_login
+      if current_user
+        render json: { username: @user.username, id: @user.id }
       else
         render json: { errors: ['Not logged in'] }, status: 404
       end

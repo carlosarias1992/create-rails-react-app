@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { getCurrentUser } from "../utils";
+import { loggedIn } from "../utils";
 
 // @ts-ignore
 const Auth = ({ component: Component, path, loggedIn, exact }) => (
@@ -15,8 +15,7 @@ const Auth = ({ component: Component, path, loggedIn, exact }) => (
 );
 
 const mapStateToProps = () => {
-  const currentUser = getCurrentUser();
-  return { loggedIn: Boolean(currentUser.id) };
+  return { loggedIn: loggedIn() };
 };
 
 // @ts-ignore

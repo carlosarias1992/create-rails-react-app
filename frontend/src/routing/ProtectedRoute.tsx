@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { getCurrentUser } from "../utils";
+import { loggedIn } from "../utils";
 
 // @ts-ignore
 const Protected = ({ component: Component, path, loggedIn, exact }) => (
@@ -9,14 +9,13 @@ const Protected = ({ component: Component, path, loggedIn, exact }) => (
     path={path}
     exact={exact}
     render={props =>
-      loggedIn ? <Component {...props} /> : <Redirect to="/" />
+      loggedIn ? <Component {...props} /> : <Redirect to="/login" />
     }
   />
 );
 
 const mapStateToProps = () => {
-  const currentUser = getCurrentUser();
-  return { loggedIn: Boolean(currentUser.id) };
+  return { loggedIn: loggedIn() };
 };
 
 // @ts-ignore

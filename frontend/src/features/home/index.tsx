@@ -1,8 +1,8 @@
 import React from "react";
-import { logout } from "../../api_requests/sessions";
 
-const logoutCurrentUser = () =>
-  logout().then(() => localStorage.removeItem("currentUser"));
+const logoutCurrentUser = () => {
+  localStorage.removeItem("token");
+};
 
 const Home = () => {
   return (

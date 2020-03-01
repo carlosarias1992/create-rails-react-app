@@ -43,18 +43,21 @@ build:
 
 .PHONY: init
 init:
-	@docker-compose run backend rails db:create
-	@docker-compose run backend rails db:migrate
-	@docker-compose run backend rails db:setup
+	@docker-compose exec backend sh -c "rails db:create && rails db:migrate && rails db:setup"
 
 .PHONY: install
 install:
 	@docker-compose run frontend yarn install
-	@docker-compose run backend bundle install
+	@docker-compose exec backend sh -c "bundle install"
 
 .PHONY: up
 up:
 	@docker-compose up -d
+	@docker-compose logs --tail 10 -f
+
+.PHONY: up_backend
+up_backend:
+	@docker-compose -f docker-compose-only-backend.yml up -d
 	@docker-compose logs --tail 10 -f
 
 .PHONY: logs
@@ -124,11 +127,11 @@ restart_frontend: down clean
 
 .PHONY: backend_test
 backend_test:
-	@docker-compose run backend rails test
+	@docker-compose exec backend sh -c "rails test"
 
 .PHONY: frontend_test
 frontend_test:
-	@docker-compose exec frontend sh -c "yarn test-ci"
+	@docker-compose run frontend yarn test-ci
 
 .PHONY: test
 test:

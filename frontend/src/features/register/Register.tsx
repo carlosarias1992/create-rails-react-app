@@ -1,5 +1,8 @@
 import React from "react";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { TextField, Button, FormGroup } from "@material-ui/core";
+import { lightBlue } from "@material-ui/core/colors";
+import "./Register.css";
 
 const INITIAL_STATE = {
   username: "",
@@ -35,12 +38,20 @@ class Register extends React.Component {
   render() {
     const { username, password } = this.state;
 
+    const theme = createMuiTheme({
+      palette: {
+        type: "dark",
+        primary: lightBlue
+      }
+    });
+
     return (
-      <>
+      <ThemeProvider theme={theme}>
         <form className="signup-form" onSubmit={this.handleSubmit}>
           <h3>Sign up</h3>
           <FormGroup>
             <TextField
+              className="Register--Input"
               label="Username"
               value={username}
               variant="outlined"
@@ -50,6 +61,7 @@ class Register extends React.Component {
           </FormGroup>
           <FormGroup>
             <TextField
+              className="Register--Input"
               label="Password"
               value={password}
               variant="outlined"
@@ -60,11 +72,11 @@ class Register extends React.Component {
           </FormGroup>
           <Button type="submit">Sign Up</Button>
         </form>
-        <div>Want to login instead?</div>
+        <p>Want to login instead?</p>
         <Button onClick={() => this.props.setToLoginPage(true)}>
           Take me to login
         </Button>
-      </>
+      </ThemeProvider>
     );
   }
 }

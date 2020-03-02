@@ -31,3 +31,4 @@
 
 backend/config/application.yml
 backend/.generators
+backend/.rakeTasks

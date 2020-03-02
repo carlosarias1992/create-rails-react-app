@@ -7,7 +7,7 @@ import "./Register.css";
 const INITIAL_STATE = {
   username: "",
   password: "",
-  errors: ""
+  submitting: false
 };
 
 class Register extends React.Component {
@@ -25,6 +25,7 @@ class Register extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    this.setState({ submitting: true });
 
     const { username, password } = this.state;
     let user = {
@@ -32,7 +33,9 @@ class Register extends React.Component {
       password: password
     };
 
-    this.props.signup({ user });
+    this.props
+      .signup({ user })
+      .catch(() => this.setState({ submitting: false }));
   }
 
   render() {
@@ -70,7 +73,9 @@ class Register extends React.Component {
               onChange={this.handleInput("password")}
             />
           </FormGroup>
-          <Button type="submit">Sign Up</Button>
+          <Button type="submit" disabled={this.state.submitting}>
+            Sign Up
+          </Button>
         </form>
         <p>Want to login instead?</p>
         <Button onClick={() => this.props.setToLoginPage(true)}>

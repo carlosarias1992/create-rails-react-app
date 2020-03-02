@@ -1,8 +1,14 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { User } from "../../types";
 
-const Logout = props => {
+interface Props {
+  currentUser?: User;
+  logout: () => void;
+}
+
+const Logout = (props: Props) => {
   const theme = createMuiTheme({
     palette: {
       type: "dark"

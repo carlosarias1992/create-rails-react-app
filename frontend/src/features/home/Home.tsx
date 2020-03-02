@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import Login from "../login/LoginContainer";
 import Register from "../register/RegisterContainer";
 
-function Home(props) {
+interface Props {}
+
+function Home(props: Props) {
   const [toLoginPage, setToLoginPage] = useState(false);
 
   return (

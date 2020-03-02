@@ -6,14 +6,22 @@ import logo from "../logo.svg";
 import { ToastProvider, useToasts } from "react-toast-notifications";
 import { loggedIn } from "../apiRequests/sessions";
 import { delayedIteration } from "../utils";
+import { UserWithStatus, User } from "../types";
 
-function renderContent(props, loading: boolean) {
+interface Props {
+  currentUser?: UserWithStatus;
+  errors?: string[];
+  login: (arg0: User) => void;
+  logout: () => void;
+}
+
+function renderContent(props: Props, loading: boolean) {
   if (loading) return <CircularProgress color="inherit" />;
   if (props.currentUser) return <Logout />;
   return <Home />;
 }
 
-function Root(props) {
+function Root(props: Props) {
   const { addToast } = useToasts();
   const [loading, setLoading] = useState(true);
 

@@ -1,10 +1,11 @@
 import * as SessionApi from "../../apiRequests/sessions";
 import { receiveErrorsAction } from "./index";
+import { User } from "../../types";
 
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 
-export const loginAction = (user: any) => {
+export const loginAction = (user: User) => {
   return {
     type: LOGIN,
     user
@@ -17,7 +18,7 @@ export const logoutAction = () => {
   };
 };
 
-export const login = user => dispatch => {
+export const login = (user: User) => (dispatch: any) => {
   return SessionApi.login(user)
     .then(response => {
       dispatch(loginAction(response.data));
@@ -25,13 +26,13 @@ export const login = user => dispatch => {
     .catch((response: any) => dispatch(receiveErrorsAction(response)));
 };
 
-export const logout = () => dispatch => {
+export const logout = () => (dispatch: any) => {
   return SessionApi.logout()
     .then(() => dispatch(logoutAction()))
     .catch((response: any) => dispatch(receiveErrorsAction(response)));
 };
 
-export const signup = user => dispatch => {
+export const signup = (user: User) => (dispatch: any) => {
   return (
     SessionApi.signup(user)
       .then(response => dispatch(loginAction(response.data)))

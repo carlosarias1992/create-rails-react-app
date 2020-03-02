@@ -1,10 +1,11 @@
 import axios from "axios";
+import { User } from "../types";
 
-export const login = (user: any) => {
+export const login = (user: User) => {
   return axios.post("api/session", user, { withCredentials: true });
 };
 
-export const signup = (user: any) => {
+export const signup = (user: User) => {
   return axios.post("api/users", user, { withCredentials: true });
 };
 

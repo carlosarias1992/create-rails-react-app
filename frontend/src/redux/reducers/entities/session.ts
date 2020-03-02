@@ -1,16 +1,23 @@
-import { merge } from "lodash";
 import { LOGIN, LOGOUT } from "../../actions/session";
+import { BaseAction, UserWithStatus } from "../../../types";
 
-export default (state = {}, action) => {
+interface SessionAction extends BaseAction {
+  user?: UserWithStatus;
+}
+
+export default (
+  state: { currentUser?: UserWithStatus } = {},
+  action: SessionAction
+) => {
   const oldState = Object.freeze(state);
   let newState;
 
   switch (action.type) {
     case LOGIN:
       newState = { currentUser: action.user };
-      return merge({}, oldState, newState);
+      return { ...oldState, ...newState };
     case LOGOUT:
-      newState = merge({}, oldState);
+      newState = { ...oldState };
       delete newState.currentUser;
       return newState;
     default:

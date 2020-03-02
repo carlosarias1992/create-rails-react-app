@@ -1,29 +1,38 @@
 import React from "react";
+import { AxiosResponse } from "axios";
 import { TextField, Button, FormGroup } from "@material-ui/core";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { lightBlue } from "@material-ui/core/colors";
+import { UserWithPassword } from "../../types";
 import "./Login.css";
 
-const INITIAL_STATE = {
-  username: "",
-  password: "",
-  submitting: false
-};
+interface Props {
+  login: (arg0: { user: UserWithPassword }) => Promise<AxiosResponse>;
+  setToLoginPage: (arg0: boolean) => void;
+}
 
 class Login extends React.Component {
-  constructor(props) {
+  readonly state = {
+    username: "",
+    password: "",
+    submitting: false
+  };
+
+  readonly props: Props;
+
+  constructor(props: Props) {
     super(props);
-    this.state = INITIAL_STATE;
+    this.props = props;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInput(type: string) {
-    return e => {
+    return (e: React.ChangeEvent<HTMLInputElement>) => {
       this.setState({ [type]: e.target.value });
     };
   }
 
-  handleSubmit(e) {
+  handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     this.setState({ submitting: true });
 
@@ -35,6 +44,7 @@ class Login extends React.Component {
 
     this.props
       .login({ user })
+      .then(() => this.setState({ submitting: false }))
       .catch(() => this.setState({ submitting: false }));
   }
 

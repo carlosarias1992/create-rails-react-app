@@ -32,6 +32,8 @@ function Root(props) {
         setLoading(false);
         if (response.data.ok) {
           props.login(response.data);
+        } else {
+          props.logout();
         }
       });
     }

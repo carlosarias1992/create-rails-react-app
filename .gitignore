@@ -30,3 +30,4 @@
 .idea
 
 backend/config/application.yml
+backend/.generators

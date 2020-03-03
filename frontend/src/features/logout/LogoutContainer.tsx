@@ -4,14 +4,12 @@ import { logout } from "../../redux/actions/session";
 import { State } from "../../types";
 
 const mapStateToProps = (state: State) => {
-  const { currentUser } = state.entities.session;
-  return { currentUser };
+    const { currentUser } = state.entities.session;
+    return { currentUser };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
+const mapDispatchToProps = (dispatch: any) => ({
     logout: () => dispatch(logout())
-  };
-};
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logout);

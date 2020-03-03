@@ -1,13 +1,16 @@
 import { connect } from "react-redux";
-import Register from "./Register";
+import { compose, withProps } from "recompose";
+import SessionForm from "./../session/SessionForm";
 import { signup } from "../../redux/actions/session";
 import { User } from "../../types";
+import { SessionForm as SessionFormEnum } from "../../enums";
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    signup: (user: User) => dispatch(signup(user))
-  };
-};
+const mapDispatchToProps = (dispatch: any) => ({
+    onSubmit: (user: User) => dispatch(signup(user))
+});
 
-// @ts-ignore
-export default connect(null, mapDispatchToProps)(Register);
+export default compose(
+    withProps({ formTypeKey: SessionFormEnum.REGISTER }),
+    connect(null, mapDispatchToProps)
+    // @ts-ignore
+)(SessionForm);

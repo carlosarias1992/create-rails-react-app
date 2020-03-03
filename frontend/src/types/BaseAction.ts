@@ -1,3 +1,3 @@
 export interface BaseAction {
-  type: string;
+    type: string;
 }

@@ -3,6 +3,6 @@ import entitiesReducer from "./entities";
 import errorsReducer from "./errors";
 
 export default combineReducers({
-  entities: entitiesReducer,
-  errors: errorsReducer
+    entities: entitiesReducer,
+    errors: errorsReducer
 });

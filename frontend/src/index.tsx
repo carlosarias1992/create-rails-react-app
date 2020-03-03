@@ -7,11 +7,10 @@ import axios from "axios";
 
 import "./index.css";
 
-// setup axios
-axios.defaults.baseURL = "http://localhost:3001";
-
 document.addEventListener("DOMContentLoaded", () => {
     const root = document.getElementById("root");
+
+    axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
     const store = configureStore({});
     ReactDOM.render(

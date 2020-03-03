@@ -10,11 +10,9 @@ interface ApiResponse {
 
 export const receiveErrorsAction = ({
     response
-}: ApiResponse): { type: string; errors: string[] } => {
-    return {
-        type: RECEIVE_ERRORS,
-        errors: response.data?.errors || [
-            "Something went wrong. Try again shortly."
-        ]
-    };
-};
+}: ApiResponse): { type: string; errors: string[] } => ({
+    type: RECEIVE_ERRORS,
+    errors: response.data?.errors || [
+        "Something went wrong. Try again shortly."
+    ]
+});

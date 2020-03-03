@@ -18,25 +18,20 @@ export const logoutAction = (): { type: string } => {
     };
 };
 
-export const login = (user: User) => (dispatch: any) => {
-    return SessionApi.login(user)
+export const login = (user: User) => (dispatch: any) =>
+    SessionApi.login(user)
         .then(response => {
             dispatch(loginAction(response.data));
         })
         .catch((response: any) => dispatch(receiveErrorsAction(response)));
-};
 
-export const logout = () => (dispatch: any) => {
-    return SessionApi.logout()
+export const logout = () => (dispatch: any) =>
+    SessionApi.logout()
         .then(() => dispatch(logoutAction()))
         .catch((response: any) => dispatch(receiveErrorsAction(response)));
-};
 
-export const signup = (user: User) => (dispatch: any) => {
-    return (
-        SessionApi.signup(user)
-            .then(response => dispatch(loginAction(response.data)))
-            // @ts-ignore
-            .catch(response => dispatch(receiveErrorsAction(response)))
-    );
-};
+export const signup = (user: User) => (dispatch: any) =>
+    SessionApi.signup(user)
+        .then(response => dispatch(loginAction(response.data)))
+        // @ts-ignore
+        .catch(response => dispatch(receiveErrorsAction(response)));

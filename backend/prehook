@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-if [ -e Gemfile ]; then
-  bundle check || bundle install
-fi
-
-if [ -e tmp/pids/server.pid ]; then
-  rm tmp/pids/server.pid
-fi

@@ -7,7 +7,7 @@ export START_TIME := $(shell date -u +%s)
 help:
 	@echo ""
 	@echo "OPERATE:"
-	@echo "init                     Initial application setup"
+	@echo "init_db                  Initial application setup"
 	@echo "build                    Build images"
 	@echo "up                       Start containers"
 	@echo "down                     Stop all containers"
@@ -38,11 +38,15 @@ elapsed_time:
 .PHONY: build
 build:
 	docker-compose build --pull --parallel
+	docker-compose up -d
+	@make init_db
+	docker-compose run frontend yarn install
+	docker-compose down
 	@make elapsed_time
 	@echo "All built 🏛"
 
-.PHONY: init
-init:
+.PHONY: init_db
+init_db:
 	@docker-compose exec backend sh -c "rails db:create && rails db:migrate && rails db:seed"
 
 .PHONY: install

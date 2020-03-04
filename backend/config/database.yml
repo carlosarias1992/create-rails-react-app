@@ -19,7 +19,7 @@ default: &default
   encoding: unicode
   host: db
   username: postgres
-  password:
+  password: postgres
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -33,7 +33,7 @@ development:
   #username: entry
 
   # The password associated with the postgres role (username).
-  password: <%= ENV['DB_PASSWORD'] %>
+  #password: <%#= ENV['DATABASE_PASSWORD'] %>
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -59,7 +59,6 @@ development:
 test:
   <<: *default
   database: entry_test
-  password: <%= ENV['DB_PASSWORD'] %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -84,4 +83,4 @@ production:
   <<: *default
   database: entry_production
   username: entry
-  password: <%= ENV['ENTRY_DATABASE_PASSWORD'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>

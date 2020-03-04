@@ -1,3 +1,5 @@
 # Ignore local config files
 .idea
 .vscode
+
+node_modules

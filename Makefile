@@ -7,7 +7,7 @@ export START_TIME := $(shell date -u +%s)
 help:
 	@echo ""
 	@echo "OPERATE:"
-	@echo "init                     Initial application setup"
+	@echo "init_db                  Initial application setup"
 	@echo "build                    Build images"
 	@echo "up                       Start containers"
 	@echo "down                     Stop all containers"
@@ -24,6 +24,11 @@ help:
 	@echo "clean                    Remove dangling images and exited containers"
 	@echo "clean_volumes            Prune data volumes"
 	@echo ""
+	@echo "TESTING:"
+	@echo "backend_test             Runs all backend tests"
+	@echo "frontend_test            Runs all frontend tests"
+	@echo "test                     Runs all backend and frontend tests"
+	@echo ""
 
 .PHONY: elapsed_time
 elapsed_time:
@@ -32,18 +37,34 @@ elapsed_time:
 
 .PHONY: build
 build:
-	docker-compose build --pull
+	docker-compose build --pull --parallel
+	docker-compose up -d
+	@sleep 30
+	@docker-compose exec backend sh -c "gem install bundler"
+	@docker-compose exec backend sh -c "bundle update"
+	docker-compose run frontend yarn install
+	@make init_db
+	docker-compose down
 	@make elapsed_time
 	@echo "All built 🏛"
 
-.PHONY: init
-init:
-	@docker-compose run frontend yarn
-	@docker-compose run backend rails db:create
+.PHONY: init_db
+init_db:
+	@docker-compose exec backend sh -c "rails db:create && rails db:migrate && rails db:seed"
+
+.PHONY: install
+install:
+	@docker-compose run frontend yarn install
+	@docker-compose exec backend sh -c "bundle install"
 
 .PHONY: up
 up:
 	@docker-compose up -d
+	@docker-compose logs --tail 10 -f
+
+.PHONY: up_backend
+up_backend:
+	@docker-compose -f docker-compose-only-backend.yml up -d
 	@docker-compose logs --tail 10 -f
 
 .PHONY: logs
@@ -110,3 +131,16 @@ restart_frontend: down clean
 	@docker-compose build frontend
 	@docker-compose up -d
 	@docker-compose logs --tail 10 -f
+
+.PHONY: backend_test
+backend_test:
+	@docker-compose exec backend sh -c "rails test"
+
+.PHONY: frontend_test
+frontend_test:
+	@docker-compose run frontend yarn test-ci
+
+.PHONY: test
+test:
+	@make backend_test
+	@make frontend_test

@@ -46,9 +46,9 @@ shell.exec("git clone https://github.com/carlosarias1992/create-rails-react-app.
 shell.cd("./create-rails-react-app");
 
 if (options.auth) {
-    shell.exec("git checkout 7aefaa2dbc50dc2605e32a45c6c23116f904a012");
+    shell.exec("git checkout f15e9f8567ca25ee2f8c7121d33822441349f85e");
 } else {
-    shell.exec("git checkout 78c2c666e84560faa1f4cbf4fe340e625d561c28");
+    shell.exec("git checkout 9a5f727f787a8393586bbbab7de8c31ad6743817");
 }
 
 shell.exec("rm -r .git");
@@ -68,6 +68,9 @@ const figaro=`# Add configuration values here, as shown below.
 # production:
 #   stripe_api_key: sk_live_EeHnL644i6zo4Iyq4v1KdV9H
 #   stripe_publishable_key: pk_live_9lcthxpSIHbGwmdO941O1XVU
+
+REACT_URL: http://localhost:3000
+DATABASE_PASSWORD: postgres
 `;
 
 shell.ShellString(`${figaro}`).to(`./${options.name}/backend/config/application.yml`);

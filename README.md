@@ -29,19 +29,19 @@ You’ll need to have Node 8.16.0 or Node 10.16.0 or later version on your local
 
 To create a new app, you may choose one of the following methods:
 
-#### npx
+### npx
 ```bash
 npx create-rails-react-app -n my-app
 ```
 ([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) is a package runner tool that comes with npm 5.2+ and higher, see [instructions for older npm versions](https://github.com/carlosarias1992/create-rails-react-app/blob/master/instructions.md))
 
-#### npm
+### npm
 ```bash
 npm init rails-react-app my-app
 ```
 `npm init <initializer>` is available in npm 6+
 
-#### Yarn
+### Yarn
 ```bash
 yarn create rails-react-app my-app
 ```
@@ -81,11 +81,16 @@ Runs the test framework.
 
 ### `./backend`
 
-If you need to use environment variables in the backend, `create-rails-react-app` uses [Figaro](https://github.com/laserlemon/figaro) to manage this for you. In `./backend/config/application.yml`, you can assign the variables you need in the environment you need them in __(eg. production/development/test)__.
+If you need to use environment variables in the backend, `create-rails-react-app` uses [Figaro](https://github.com/laserlemon/figaro) to manage this for you. In `./backend/config/application.yml`, you can assign the variables you need in the environment you need them in *(eg. production/development/test)*.
+
+Required Environment Variables that are provided for you:
+
+* `DATABASE_PASSWORD` Defaults to `postgres`
+* `REACT_URL` Defaults to `http://localhost:3000`
 
 ### `./frontend`
 
-In the frontend, all of your environment variables will need to be preceded with `REACT_APP_`. You will need to create an `.env` file in your project's `frontend` directory and assign the variables there. If you need to define variables depending on the environment you're in, you can simply append the environment name to the file name __(eg. `.env.development`)__
+In the frontend, all of your environment variables will need to be preceded with `REACT_APP_`. You will need to create an `.env` file in your project's `frontend` directory and assign the variables there. If you need to define variables depending on the environment you're in, you can simply append the environment name to the file name *(eg. `.env.development`)*
 
 ### `.gitignore`
 

@@ -1,0 +1,6 @@
+Layout/LineLength:
+  Enabled: True
+  Max: 120
+
+Style/Documentation:
+  Severity: warning

@@ -72,7 +72,7 @@ log:
 .PHONY: docker_attach attach
 docker_attach: attach
 attach:
-	docker ps | grep 'admin-tools_django' | cut -d ' ' -f1 | xargs -o docker attach
+	docker ps | grep 'PROJECT_NAME_RAILS_REACT_APP_backend' | cut -d ' ' -f1 | xargs -o docker attach
 
 .PHONY: down
 down:
@@ -106,7 +106,7 @@ restart:
 
 .PHONY: restart_frontend
 restart_frontend: down clean
-	@docker images admin-tools_frontend:latest -q | xargs docker rmi
+	@docker images PROJECT_NAME_RAILS_REACT_APP_frontend:latest -q | xargs docker rmi
 	@docker-compose build frontend
 	@docker-compose up -d
 	@docker-compose logs --tail 10 -f

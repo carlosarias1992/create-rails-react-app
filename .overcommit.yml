@@ -16,15 +16,21 @@
 # Uncomment the following lines to make the configuration take effect.
 
 PreCommit:
+  Rufo:
+    enabled: true
+    on_warn: fail
+    description: 'opinionated ruby formatter'
+    command: ['rufo', './backend']
+
   RuboCop:
     enabled: true
-    on_warn: fail # Treat all warnings as failures
+    exclude: '**/schema.rb'
 
   EsLint:
     enabled: true
     on_warn: fail
-#    # https://github.com/sds/overcommit/issues/338
-#    command: './node_modules/eslint/bin/eslint.js'
+  #    # https://github.com/sds/overcommit/issues/338
+  #    command: './node_modules/eslint/bin/eslint.js'
 
   Prettier:
     enabled: true

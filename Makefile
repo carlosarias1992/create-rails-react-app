@@ -39,10 +39,8 @@ elapsed_time:
 build:
 	docker-compose build --pull --parallel --no-cache
 	@docker-compose run backend gem install bundler
-	@docker-compose run backend bundle update
-	docker-compose up -d
+	@make install
 	@make init_db
-	docker-compose down
 	@make elapsed_time
 	@echo "All built 🏛"
 
@@ -53,7 +51,7 @@ init_db:
 .PHONY: install
 install:
 	@docker-compose run frontend yarn install
-	@docker-compose run backend bundle install
+	@docker-compose run backend bundle update
 
 .PHONY: up
 up:

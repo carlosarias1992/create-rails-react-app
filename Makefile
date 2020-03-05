@@ -37,12 +37,10 @@ elapsed_time:
 
 .PHONY: build
 build:
-	docker-compose build --pull --parallel
+	docker-compose build --pull --parallel --no-cache
+	@docker-compose run backend gem install bundler
+	@docker-compose run backend bundle update
 	docker-compose up -d
-	@sleep 30
-	@docker-compose exec backend sh -c "gem install bundler"
-	@docker-compose exec backend sh -c "bundle update"
-	docker-compose run frontend yarn install
 	@make init_db
 	docker-compose down
 	@make elapsed_time
@@ -50,12 +48,12 @@ build:
 
 .PHONY: init_db
 init_db:
-	@docker-compose exec backend sh -c "rails db:create && rails db:migrate && rails db:seed"
+	@docker-compose run backend rails db:create && rails db:migrate && rails db:seed
 
 .PHONY: install
 install:
 	@docker-compose run frontend yarn install
-	@docker-compose exec backend sh -c "bundle install"
+	@docker-compose run backend bundle install
 
 .PHONY: up
 up:
@@ -93,7 +91,7 @@ log:
 .PHONY: docker_attach attach
 docker_attach: attach
 attach:
-	docker ps | grep 'PROJECT_NAME_RAILS_REACT_APP_backend' | cut -d ' ' -f1 | xargs -o docker attach
+	docker ps | grep 'justified_backend' | cut -d ' ' -f1 | xargs -o docker attach
 
 .PHONY: down
 down:
@@ -127,14 +125,14 @@ restart:
 
 .PHONY: restart_frontend
 restart_frontend: down clean
-	@docker images PROJECT_NAME_RAILS_REACT_APP_frontend:latest -q | xargs docker rmi
+	@docker images justified_frontend:latest -q | xargs docker rmi
 	@docker-compose build frontend
 	@docker-compose up -d
 	@docker-compose logs --tail 10 -f
 
 .PHONY: backend_test
 backend_test:
-	@docker-compose exec backend sh -c "rails test"
+	@docker-compose run backend rails test
 
 .PHONY: frontend_test
 frontend_test:

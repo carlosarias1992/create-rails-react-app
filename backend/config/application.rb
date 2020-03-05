@@ -8,7 +8,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module PROJECT_NAME_RAILS_REACT_APP
+module CreateRailsReactApp
   class Application < Rails::Application
     if File.file?('/.dockerenv') == true
       host_ip = `/sbin/ip route|awk '/default/ { print $3 }'`.strip

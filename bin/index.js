@@ -46,9 +46,9 @@ shell.exec("git clone https://github.com/carlosarias1992/create-rails-react-app.
 shell.cd("./create-rails-react-app");
 
 if (options.auth) {
-    shell.exec("git checkout c004bcad89d4ce22f0a72081b9d7f134b4ffaa8b");
+    shell.exec("git checkout d45d954d2a0da5861c29fd7f184e6f9fedd67295");
 } else {
-    shell.exec("git checkout 4148df9a963670abfe851233c21da5a8925616b0");
+    shell.exec("git checkout 5166adeaf05c810cd535dc7d6c8267b76c584edb");
 }
 
 shell.exec("rm -r .git");
@@ -71,6 +71,19 @@ const figaro=`# Add configuration values here, as shown below.
 `;
 
 shell.ShellString(`${figaro}`).to(`./${options.name}/backend/config/application.yml`);
+
+// Replace `PROJECT_NAME_RAILS_REACT_APP` with project name provided by user
+
+const PROJECT_NAME_RAILS_REACT_APP = 'PROJECT_NAME_RAILS_REACT_APP';
+
+shell.cd(`./${options.name}`);
+shell.exec(`find . -type f -name "*.yml" -exec sed -i'' '' 's/${PROJECT_NAME_RAILS_REACT_APP}/${options.name}/g' {} +`);
+shell.exec(`find . -type f -name "*.rb" -exec sed -i'' '' 's/${PROJECT_NAME_RAILS_REACT_APP}/${options.name}/g' {} +`);
+shell.exec(`find . -type f -name "Dockerfile" -exec sed -i'' '' 's/${PROJECT_NAME_RAILS_REACT_APP}/${options.name}/g' {} +`);
+shell.exec(`find . -type f -name "*.html.erb" -exec sed -i'' '' 's/${PROJECT_NAME_RAILS_REACT_APP}/${options.name}/g' {} +`);
+shell.exec(`find . -type f -name "Makefile" -exec sed -i'' '' 's/${PROJECT_NAME_RAILS_REACT_APP}/${options.name}/g' {} +`);
+shell.exec(`find . -type f -name "*.json" -exec sed -i'' '' 's/${PROJECT_NAME_RAILS_REACT_APP}/${options.name}/g' {} +`);
+shell.cd("..");
 
 // Success!
 

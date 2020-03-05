@@ -1,10 +1,10 @@
-# Create Rails React App  [![Build Status](https://travis-ci.com/carlosarias1992/entry.svg?token=PXQSTSbcuzTt1ugrMp75&branch=master)](https://travis-ci.com/carlosarias1992/entry)
+# Create Rails React App  [![Build Status](https://travis-ci.com/carlosarias1992/create-rails-react-app.svg?token=PXQSTSbcuzTt1ugrMp75&branch=master)](https://travis-ci.com/carlosarias1992/create-rails-react-app)
 
 Create full-stack apps with no build configuration.
 
 Create Rails React App works with docker.
 If you don't have docker, you should download it [here](https://www.docker.com/products/docker-desktop).
-If something doesn’t work, please [file an issue](https://github.com/carlosarias1992/entry/issues/new).
+If something doesn’t work, please [file an issue](https://github.com/carlosarias1992/create-rails-react-app/issues/new).
 
 ## Quick Overview
 
@@ -33,7 +33,7 @@ To create a new app, you may choose one of the following methods:
 ```bash
 npx create-rails-react-app -n my-app
 ```
-([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) is a package runner tool that comes with npm 5.2+ and higher, see [instructions for older npm versions](https://github.com/carlosarias1992/entry/blob/master/instructions.md))
+([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) is a package runner tool that comes with npm 5.2+ and higher, see [instructions for older npm versions](https://github.com/carlosarias1992/create-rails-react-app/blob/master/instructions.md))
 
 #### npm
 ```bash
@@ -137,4 +137,4 @@ The combination, Rails + PostgreSQL + Docker Compose, is just a result I followe
 Bootstrapped with [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript).
 
 ## License
-Create Rails React App is open source software [licensed as MIT](https://github.com/carlosarias1992/entry/blob/master/LICENSE).
+Create Rails React App is open source software [licensed as MIT](https://github.com/carlosarias1992/create-rails-react-app/blob/master/LICENSE).

@@ -98,7 +98,7 @@ If you don't already have docker, you should install it now:
   ${chalk.cyan("make build")}
     Builds all containers and initializes the database.
   
-  ${chalk.cyan("make up")}
+  ${chalk.cyan("make start")}
     Starts the development server.
   
   ${chalk.cyan("make test")}
@@ -106,8 +106,16 @@ If you don't already have docker, you should install it now:
   
 We suggest that you begin by typing:
   ${chalk.cyan("cd")} ${options.name}
-  ${chalk.cyan("make build && make up")}
+  ${chalk.cyan("make build && make start")}
 
 Happy hacking!`;
 
-console.log(success);
+const error = `${chalk.red.bold("Unexpected error!")} If you believe this is our fault, please file an issue:
+   https://github.com/carlosarias1992/create-rails-react-app/issues/new
+`;
+
+if (fs.existsSync(`./${options.name}`)) {
+    console.log(success);
+} else {
+    console.log(error);
+}

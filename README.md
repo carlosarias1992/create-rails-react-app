@@ -3,7 +3,7 @@
 Create full-stack apps with no build configuration.
 
 Create Rails React App works with docker.
-If you don't have docker, you should download it [here](https://www.docker.com/products/docker-desktop).
+If you don't have docker already, you should download it [here](https://www.docker.com/products/docker-desktop).
 If something doesn’t work, please [file an issue](https://github.com/carlosarias1992/create-rails-react-app/issues/new).
 
 ## Quick Overview
@@ -64,7 +64,7 @@ Builds the entire docker infrastructure needed to run your app.
 
 You should only run this command once after creating your project or right after cleaning your containers.
 
-### `make up`
+### `make start`
 Runs the app in development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
@@ -79,18 +79,23 @@ Runs the test framework.
 
 ## Environment Variables
 
-### `./backend`
+### `backend`
 
-If you need to use environment variables in the backend, `create-rails-react-app` uses [Figaro](https://github.com/laserlemon/figaro) to manage this for you. In `./backend/config/application.yml`, you can assign the variables you need in the environment you need them in *(eg. production/development/test)*.
+`create-rails-react-app` uses [Figaro](https://github.com/laserlemon/figaro) to manage environment variables in Rails. In `./backend/config/application.yml`, you can assign the variables you need in the environment you need them in *(eg. production/development/test)*.
 
-Required Environment Variables that are provided for you:
+Required environment variables:
 
 * `DATABASE_PASSWORD` Defaults to `postgres`
 * `REACT_URL` Defaults to `http://localhost:3000`
 
-### `./frontend`
+### `frontend`
 
-In the frontend, all of your environment variables will need to be preceded with `REACT_APP_`. You will need to create an `.env` file in your project's `frontend` directory and assign the variables there. If you need to define variables depending on the environment you're in, you can simply append the environment name to the file name *(eg. `.env.development`)*
+All of your environment variables will need to be preceded with `REACT_APP_`. You will need to create an `.env` file in your project's `frontend` directory and assign the variables there. If you need to define variables depending on the environment you're in, you can simply append the environment name to the file name.
+You can refer to `.env.development` in your project's frontend directory for an example of this. 
+
+Required environment variables:
+
+* `REACT_APP_API_URL` Defaults to `http://localhost:3001` 
 
 ### `.gitignore`
 

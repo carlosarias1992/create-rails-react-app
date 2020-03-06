@@ -18,7 +18,7 @@ If you've previously installed `create-rails-react-app` globally via `npm instal
 
 Then open [http://localhost:3000/](http://localhost:3000/) to see your app.
 
-### Get Started Immediately
+## Get Started Immediately
 You don’t need to install or configure tools like webpack or Babel.
 They are preconfigured and hidden so that you can focus on the code.
 

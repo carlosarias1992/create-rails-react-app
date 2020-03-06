@@ -46,9 +46,9 @@ shell.exec("git clone https://github.com/carlosarias1992/create-rails-react-app.
 shell.cd("./create-rails-react-app");
 
 if (options.auth) {
-    shell.exec("git checkout f15e9f8567ca25ee2f8c7121d33822441349f85e");
+    shell.exec("git checkout 276dadde72d363d293da867531b79bd40722d965");
 } else {
-    shell.exec("git checkout 9a5f727f787a8393586bbbab7de8c31ad6743817");
+    shell.exec("git checkout 6bff0bd5f6d702ce76f96ca9a519818a93ee0cee");
 }
 
 shell.exec("rm -r .git");

@@ -1,0 +1,39 @@
+{
+  "name": "create-rails-react-app",
+  "version": "0.0.1",
+  "description": "Setup a full-stack app with one command",
+  "main": "bin/index.js",
+  "bin": {
+    "create-rails-react-app": "./bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlosarias1992/entry.git"
+  },
+  "keywords": [
+    "rails",
+    "react",
+    "typescript",
+    "full-stack",
+    "docker",
+    "eslint",
+    "prettier",
+    "rufo",
+    "overcommit"
+  ],
+  "author": "Carlos Arias-Miranda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/carlosarias1992/entry/issues"
+  },
+  "homepage": "https://github.com/carlosarias1992/entry#readme",
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "fs": "0.0.1-security",
+    "shelljs": "^0.8.3",
+    "yargs": "^15.1.0"
+  }
+}

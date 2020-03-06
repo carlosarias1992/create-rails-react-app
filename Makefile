@@ -7,16 +7,18 @@ export START_TIME := $(shell date -u +%s)
 help:
 	@echo ""
 	@echo "OPERATE:"
+	@echo "install                  Install backend and frontend dependencies"
 	@echo "init_db                  Initial application setup"
 	@echo "build                    Build images"
-	@echo "up                       Start containers"
+	@echo "start                    Start containers"
+	@echo "start_backend            Start only the containers needed for the backend"
 	@echo "down                     Stop all containers"
 	@echo "restart                  Stop then start containers"
 	@echo "restart_frontend         Clean frontend images and start containers"
 	@echo ""
 	@echo "DEBUGGING:"
-	@echo "bash                     Bash shell inside Django Docker container"
-	@echo "attach                   Attach input/output to Django container for debugging"
+	@echo "bash                     Bash shell inside Rails Docker container"
+	@echo "attach                   Attach input/output to Rails container for debugging"
 	@echo "logs                     Re-attach to running container logs"
 	@echo "log                      Re-attach to specified running container log"
 	@echo ""
@@ -53,20 +55,19 @@ install:
 	@docker-compose run frontend yarn install
 	@docker-compose run backend bundle update
 
-.PHONY: up
-up:
+.PHONY: start
+start:
 	@docker-compose up -d
 	@docker-compose logs --tail 10 -f
 
-.PHONY: up_backend
-up_backend:
+.PHONY: start_backend
+start_backend:
 	@docker-compose -f docker-compose-only-backend.yml up -d
 	@docker-compose logs --tail 10 -f
 
 .PHONY: logs
 logs:
-	# docker-compose logs -f | tee "django_root/logs/$(TODAY).log"
-	docker-compose logs -f --no-color > "django_root/logs/$(TODAY).log" &
+	docker-compose logs -f --no-color > "backend/logs/$(TODAY).log" &
 	docker-compose logs -f
 
 .PHONY: log
@@ -75,12 +76,12 @@ log:
 	    	echo "";\
 	  	echo "Please enter a container name as argument,";\
 	    	echo "";\
-         	echo "  e.g. 'make log name=django'";\
+         	echo "  e.g. 'make log name=backend'";\
 	    	echo "";\
 		echo "or use 'make logs' to attach to all container logs.";\
 	    	echo "";\
 	  	echo "Available container names are:";\
-          	echo "  django";\
+          	echo "  backend";\
 	  		echo "  db";\
 	else\
 	  docker-compose logs -f $(name);\
@@ -117,9 +118,9 @@ clean_volumes:
 
 .PHONY: restart
 restart:
-	@echo "make down => make up"
+	@echo "make down => make start"
 	@make down
-	@make up
+	@make start
 
 .PHONY: restart_frontend
 restart_frontend: down clean

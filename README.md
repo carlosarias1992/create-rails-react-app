@@ -37,13 +37,13 @@ npx create-rails-react-app -n my-app
 
 ### npm
 ```bash
-npm init rails-react-app my-app
+npm init rails-react-app -n my-app
 ```
 `npm init <initializer>` is available in npm 6+
 
 ### Yarn
 ```bash
-yarn create rails-react-app my-app
+yarn create rails-react-app -n my-app
 ```
 [`yarn create <starter-kit-package>`](https://yarnpkg.com/lang/en/docs/cli/create/) is available in Yarn 0.25+
 

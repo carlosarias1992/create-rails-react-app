@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ -e Gemfile ]; then
-  bundle check || bundle install
+  bundle update
 fi
 
 if [ -e tmp/pids/server.pid ]; then

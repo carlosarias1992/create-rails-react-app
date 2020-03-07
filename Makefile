@@ -41,7 +41,7 @@ elapsed_time:
 build:
 	docker-compose build --pull --parallel --no-cache
 	@docker-compose run backend gem install bundler
-	@make install
+	@docker-compose run frontend yarn install
 	@make init_db
 	@make elapsed_time
 	@echo "All built 🏛"

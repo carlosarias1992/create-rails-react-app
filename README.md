@@ -5,7 +5,7 @@ Create full-stack apps with no build configuration.
 Create Rails React App works with docker.
 If you don't have docker already, you should download it [here](https://www.docker.com/products/docker-desktop).
 If something doesn’t work, please [file an issue](https://github.com/carlosarias1992/create-rails-react-app/issues/new).
-
+ 
 ## Get Started Immediately
 Inside your newly created project, you can run some built-in commands:
 

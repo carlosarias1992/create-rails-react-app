@@ -1,4 +1,4 @@
-# Create Rails React App  [![Build Status](https://travis-ci.com/carlosarias1992/create-rails-react-app.svg?token=PXQSTSbcuzTt1ugrMp75&branch=master)](https://travis-ci.com/carlosarias1992/create-rails-react-app)
+# Create Rails React App
 
 Create full-stack apps with no build configuration.
 
